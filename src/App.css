@@ -1,0 +1,49 @@
+.movies-header {
+  text-align: center;
+  background-color: #282c34;
+  color: #FFF;
+  padding: 0.8em 0em;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.data-table {
+  margin: auto;
+  background-color: #282c34;
+  color: #FFF;
+  width: 80%;
+  text-align: center;
+}
+
+.cover-img {
+  background-repeat: no-repeat;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+
+.app-action-button-edit
+.app-action-button-delete
+.app-action-button-details {
+  margin-right: 4px !important;
+}
+
+.form-label {
+  color: #FFF;
+}
+
+.add-form {
+  margin: 0em 25em;
+}
+
+.movie-details {
+  color: #FFF;
+  background-color: #282c34;
+  text-align: center;
+  padding: 1em;
+  margin: 0 20em;
+}
+
+.back-button {
+  margin: 0.5em 0em 0em 4em;
+}
