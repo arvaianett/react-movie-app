@@ -22,12 +22,6 @@
   z-index: -1;
 }
 
-.app-action-button-edit
-.app-action-button-delete
-.app-action-button-details {
-  margin-right: 4px !important;
-}
-
 .form-label {
   color: #FFF;
 }
