@@ -14,6 +14,7 @@ const App = () => {
 
   const [arrow, setArrow] = useState('Show');
 
+  //ant design function for tooltip
   const mergedArrow = useMemo(() => {
     if (arrow === 'Hide') {
       return false;
@@ -28,6 +29,7 @@ const App = () => {
     };
   }, [arrow]);
 
+  //search function for age limit
   const searchTable = newSearchValue => {
     newSearchValue.preventDefault();
     let helperSearchValue = '';
@@ -60,6 +62,7 @@ const App = () => {
     }
   }
 
+  //delete data
   const deleteMovie = (e, id) => {
     e.preventDefault();
     fetch(api + '/' + id, { method: 'DELETE' })
@@ -79,6 +82,7 @@ const App = () => {
     });
   }
 
+  //get data for table
   useEffect(() => {
     setLoading(true);
     fetch(
@@ -94,6 +98,7 @@ const App = () => {
       .catch(setError);
   }, []);
 
+  //datatable for home page
   const Table = (props) => {
     return(
       <table className="data-table">
@@ -138,6 +143,7 @@ const App = () => {
     )
   }
 
+  //render home page
   if (loading) return <h1>Loading...</h1>;
   if (error) return <pre>{JSON.stringify(error)}</pre>
   if (!data || !data || data.length === 0)
@@ -164,8 +170,10 @@ const App = () => {
 
 export default App;
 
+//ccrudcrud api
 export const api = `https://crudcrud.com/api/236c94a3965142f280ede697bcea1a23/movie`;
 
+//basic layout for all pages
 export const Layout = () => {
   return(
     <div className="movies">

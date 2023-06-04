@@ -10,7 +10,8 @@ const AddMovie = () => {
     const [description, setDescription] = useState("");
     const [ageLimit, setAgeLimit] = useState("");
     
-      const handleAddSubmit = (e) => {
+    //post data event
+    const handleAddSubmit = (e) => {
         e.preventDefault();
         let data = {
             title: title,
@@ -20,7 +21,8 @@ const AddMovie = () => {
         postData(JSON.stringify(data));
       };
     
-      const postData = (data) => {
+    //post data
+    const postData = (data) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -46,6 +48,8 @@ const AddMovie = () => {
                 alert(error);
             });
     }
+
+    //render add movie page
     return(
         <div>
             <Layout></Layout>

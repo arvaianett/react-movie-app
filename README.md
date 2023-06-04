@@ -1,3 +1,13 @@
+Telepítés:
+git clone https://github.com/arvaianett/react-movie-app.git
+react-movie-app mappában npm install
+npm start
+
+Megjegyzés: 
+- delete valamiért hibával jön vissza, frissíteni kell a listát, hogy eltűnjön belőle a kiválasztott elem
+- ha az endpoint hibát dobna az App.js 167. sorában át lehet írni egy működőre (privát ablakban és más böngészőkben nem ugyanazt dobja ki állandóan)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

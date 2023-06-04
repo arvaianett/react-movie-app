@@ -6,11 +6,12 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { api, Layout } from "../App.js";
 
-const MovieDetail = (props) => {
+const MovieDetail = () => {
 
     const [data, setData] = useState(null);
     const { id } = useParams();
 
+    //get data for movie details page
     useEffect(() => {
         fetch(api + '/' + id)
             .then(response => response.json())
@@ -18,6 +19,7 @@ const MovieDetail = (props) => {
       }, []);
     
 
+    //render movie details page
     if (!data)
     return(<h2>No data</h2>)
     if (data)

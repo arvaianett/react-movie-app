@@ -12,6 +12,7 @@ const EditMovie = () => {
     const [ageLimit, setAgeLimit] = useState("");
     const { id } = useParams();
 
+    //get data for edit page
     useEffect(() => {
         fetch(api + '/' + id)
             .then(response => response.json())
@@ -22,7 +23,8 @@ const EditMovie = () => {
             });
       }, []);
     
-      const handleAddSubmit = (e) => {
+    //edit data action
+    const handleAddSubmit = (e) => {
         e.preventDefault();
         let data = {
             title: title,
@@ -32,6 +34,7 @@ const EditMovie = () => {
         editData(JSON.stringify(data));
       };
 
+    //edit data put
     const editData = (data) => {
         const requestOptions = {
             method: 'PUT',
@@ -56,6 +59,7 @@ const EditMovie = () => {
             });
     }
 
+    //render edit page
     return(
         <div>
             <Layout></Layout>
