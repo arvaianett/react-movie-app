@@ -2,7 +2,7 @@ import { Input, Button } from 'antd';
 import { useState } from "react"
 import '../App.css';
 import React from 'react';
-import { api } from "../App.js";
+import { api, Layout } from "../App.js";
 import { Link } from "react-router-dom";
 
 const AddMovie = () => {
@@ -43,31 +43,25 @@ const AddMovie = () => {
             })
             .catch(error => {
                 console.error('There was an error!', error);
+                alert(error);
             });
     }
     return(
-        <div className="movies">
-            <img className="cover-img" src={require('../assets/cover.jpg')} alt="Film rolls cover"/>
-            <header className="movies-header">
-                My movies
-            </header>
-            <Button className="back-button"><Link to={`/`}>Back to list</Link></Button>
-            <form className="add-form">
-                <label className="form-label" htmlFor="title">Title</label>
-                <Input value={title} name="title" type="text" onChange={(event) => setTitle(event.target.value)} required/>
-                <label className="form-label" htmlFor="description">Description</label>
-                <Input value={description} name="description" type="text" onChange={(event) => setDescription(event.target.value)} required/>
-                <label className="form-label" htmlFor="age-limit">Age limit</label>
-                <Input value={ageLimit} name="age-limit" type="number" min={0} max={18} onChange={(event) => setAgeLimit(event.target.value)} required/>
-                <Button onClick={handleAddSubmit}>Add movie</Button>
-            </form>
-            {/* <Alert
-      message="Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text"
-      type="warning"
-      closable
-      onClose={onClose}
-    /> */}
-      </div>
+        <div>
+            <Layout></Layout>
+            <div className="movies">
+                <Button className="back-button"><Link to={`/`}>Back to list</Link></Button>
+                <form className="add-form">
+                    <label className="form-label" htmlFor="title">Title</label>
+                    <Input value={title} name="title" type="text" onChange={(event) => setTitle(event.target.value)} required/>
+                    <label className="form-label" htmlFor="description">Description</label>
+                    <Input value={description} name="description" type="text" onChange={(event) => setDescription(event.target.value)} required/>
+                    <label className="form-label" htmlFor="age-limit">Age limit</label>
+                    <Input value={ageLimit} name="age-limit" type="number" min={0} max={18} onChange={(event) => setAgeLimit(event.target.value)} required/>
+                    <Button className="add-movie-button-add" onClick={handleAddSubmit}>Add movie</Button>
+                </form>
+        </div>
+    </div>
     )
   }
 

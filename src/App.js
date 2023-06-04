@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { useState } from "react"
-import { Button, Input } from 'antd';
+import { useState, useMemo } from "react"
+import { Button, Input, Tooltip } from 'antd';
 import { EditFilled, DeleteFilled, PlusCircleFilled, FormOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 
@@ -11,6 +11,22 @@ const App = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
+
+  const [arrow, setArrow] = useState('Show');
+
+  const mergedArrow = useMemo(() => {
+    if (arrow === 'Hide') {
+      return false;
+    }
+
+    if (arrow === 'Show') {
+      return true;
+    }
+
+    return {
+      pointAtCenter: true,
+    };
+  }, [arrow]);
 
   const searchTable = newSearchValue => {
     newSearchValue.preventDefault();
@@ -36,7 +52,7 @@ const App = () => {
       setFilteredData(data);
     } else {
       let filteredData = data.filter(e => {
-        if (+e.ageLimit < helperSearchValue) {
+        if (+e.ageLimit <= helperSearchValue) {
           return e;
         }
       });
@@ -44,24 +60,19 @@ const App = () => {
     }
   }
 
-  const SearchBar = () => {
-    return(
-      <Input className="search-bar" value={searchValue} onChange={(event) => searchTable(event)}/>
-    )
-  }
-
   const deleteMovie = (e, id) => {
     e.preventDefault();
     fetch(api + '/' + id, { method: 'DELETE' })
       .then(async response => {
         const data = await response.json();
-
+        console.log(data)
         // check for error response
         if (!response.ok) {
             // get error message from body or default to response status
             const error = (data && data.message) || response.status;
             return Promise.reject(error);
         }
+        alert('ok');
     })
     .catch(error => {
         console.error('There was an error!', error);
@@ -86,25 +97,39 @@ const App = () => {
   const Table = (props) => {
     return(
       <table className="data-table">
-        <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Age limit</th>
-          <th><Button><Link to="/add-movie"><PlusCircleFilled />Add movie</Link></Button></th>
-        </tr>
+        <thead className='data-table-head'>
+          <tr>
+            <th className='data-table-th'>Title</th>
+            <th>Description</th>
+            <th>Age limit</th>
+            <th><Button><Link to="/add-movie"><PlusCircleFilled />Add movie</Link></Button></th>
+          </tr>
         </thead>
         <tbody>
           {props.dataSource.map((data, i) => (
             <tr>
-            <td key={i + data._id + 'title'}>{data.title}</td>
-            <td key={i + data._id + 'description'}>{data.description}</td>
-            <td key={i + data._id + 'ageLimit'}>{data.ageLimit}</td>
+              <td className="data-table-td" key={i + data._id + 'title'}>{data.title}</td>
+              <td key={i + data._id + 'description'}>{data.description}</td>
+              <td key={i + data._id + 'ageLimit'}>{data.ageLimit}</td>
             <td>
-              <Button><Link to={`/movie-details/${data._id}`}
-              state={{ data }} className="app-action-button-details"><FormOutlined /></Link></Button>
-              <Button><Link to={`/edit-movie/${data._id}`} className="app-action-button-edit"><EditFilled /></Link></Button>
-              <Button onClick={(e) => deleteMovie(e, data._id)} className="app-action-button-delete"><DeleteFilled /></Button>
+              <div className="app-action-button-details">
+              
+              <Tooltip placement="top" title="Details" arrow={mergedArrow}>
+                <Button><Link to={`/movie-details/${data._id}`}
+                  state={{ data }}><FormOutlined /></Link>
+                </Button>
+              </Tooltip>
+              </div>
+              <div className="app-action-button-edit">
+                <Tooltip placement="top" title="Edit" arrow={mergedArrow}>
+                  <Button><Link to={`/edit-movie/${data._id}`}><EditFilled /></Link></Button>
+                </Tooltip>
+              </div>
+              <div className="app-action-button-delete">
+                <Tooltip placement="top" title="Delete" arrow={mergedArrow}>
+                  <Button onClick={(e) => deleteMovie(e, data._id)}><DeleteFilled /></Button>
+                </Tooltip>
+              </div>
             </td>
           </tr>
           ))}
@@ -117,29 +142,37 @@ const App = () => {
   if (error) return <pre>{JSON.stringify(error)}</pre>
   if (!data || !data || data.length === 0)
     return (
-      <div className="movies">
-      <img className="cover-img" src={require('./assets/cover.jpg')} alt="Film rolls cover"/>
-      <header className="movies-header">
-        My movies
-      </header>
-      <Button><Link to="/add-movie"><PlusCircleFilled />Add movie</Link></Button>
+      <div>
+        <Layout></Layout>
+        <Button className="add-movie-button"><Link to="/add-movie"><PlusCircleFilled />Add movie</Link></Button>
       </div>
     )
   if (data && data.length > 0)
     return (
-      <div className="movies">
-      <img className="cover-img" src={require('./assets/cover.jpg')} alt="Film rolls cover"/>
-      <header className="movies-header">
-        My movies
-      </header>
-      <SearchBar searchTable={searchTable} />
       <div>
-        <Table dataSource={filteredData}/>
+        <Layout></Layout>
+        <div className="search-bar">
+          <label htmlFor="age-limit-filter" className="age-limit-label">Age limit filter</label>
+          <Input name="age-limit-filter" value={searchValue} onChange={(event) => searchTable(event)}/>
+        </div>
+        <div>
+          <Table dataSource={filteredData}/>
+        </div>
       </div>
-    </div>
     );
 }
 
 export default App;
 
-export const api = `https://crudcrud.com/api/27ff99d6ce15412c81fcbe17d5636f47/movie`;
+export const api = `https://crudcrud.com/api/236c94a3965142f280ede697bcea1a23/movie`;
+
+export const Layout = () => {
+  return(
+    <div className="movies">
+      <img className="cover-img" src={require('./assets/cover.jpg')} alt="Film rolls cover"/>
+      <header className="movies-header">
+        MY MOVIES
+      </header>
+    </div>
+  )
+}
