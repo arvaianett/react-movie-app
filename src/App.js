@@ -171,7 +171,7 @@ const App = () => {
 export default App;
 
 //ccrudcrud api
-export const api = `https://crudcrud.com/api/236c94a3965142f280ede697bcea1a23/movie`;
+export const api = `https://crudcrud.com/api/5a161ac0b4404f56a522e3b269ae4841/movie`;
 
 //basic layout for all pages
 export const Layout = () => {

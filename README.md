@@ -1,7 +1,7 @@
 Telepítés:
-git clone https://github.com/arvaianett/react-movie-app.git
-react-movie-app mappában npm install
-npm start
+-git clone https://github.com/arvaianett/react-movie-app.git
+-react-movie-app mappában npm install
+-npm start
 
 Megjegyzés: 
 - delete valamiért hibával jön vissza, frissíteni kell a listát, hogy eltűnjön belőle a kiválasztott elem
